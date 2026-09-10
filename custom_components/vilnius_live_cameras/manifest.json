@@ -3,9 +3,9 @@
   "name": "Vilnius Live Cameras",
   "codeowners": [],
   "config_flow": true,
-  "documentation": "https://github.com/untitledlt/ha-vilnius-live-cameras",
+  "documentation": "https://github.com/cheloveq/ha-vilnius-live-cameras",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/untitledlt/ha-vilnius-live-cameras/issues",
+  "issue_tracker": "https://github.com/cheloveq/ha-vilnius-live-cameras/issues",
   "requirements": [],
   "version": "0.1.3"
 }

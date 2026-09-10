@@ -19,7 +19,7 @@ The integration refreshes Baltic Live Cam authorization tokens every five minute
 
 1. Install HACS if it is not already installed.
 2. In HACS, open **Integrations**, choose the three-dot menu, and select **Custom repositories**.
-3. Add `https://github.com/untitledlt/ha-vilnius-live-cameras` as an **Integration**.
+3. Add `https://github.com/cheloveq/ha-vilnius-live-cameras` as an **Integration**.
 4. Install **Vilnius Live Cameras**, restart Home Assistant, and add it from Settings → Devices & services.
 
 The repository is public so HACS can access it directly. The integration creates four camera entities.
