@@ -1,7 +1,4 @@
 __pycache__/
-.ha-test/config/.storage/
-.ha-test/config/home-assistant.log
-.ha-test/config/home-assistant_v2.db*
 .pytest_cache/
 .venv/
 .DS_Store
