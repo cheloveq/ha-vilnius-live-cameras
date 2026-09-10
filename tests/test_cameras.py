@@ -20,23 +20,22 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertTrue(manifest["config_flow"])
         self.assertEqual(manifest["version"], "0.1.3")
 
-    def test_catalog_contains_the_five_requested_cameras(self) -> None:
+    def test_catalog_contains_the_four_live_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()
         for key in (
             "national_philharmonic",
-            "tv_tower",
             "white_bridge",
             "vilnius_panorama",
             "st_johns_street",
         ):
             self.assertIn(f'"key": "{key}"', source)
-        self.assertEqual(source.count('"key": '), 5)
+        self.assertEqual(source.count('"key": '), 4)
+        self.assertNotIn("tv_tower", source)
 
     def test_stream_and_snapshot_urls_are_https(self) -> None:
         source = (COMPONENT / "const.py").read_text()
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam1.m3u8", source)
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam2.m3u8", source)
-        self.assertIn("https://map.sviesoforai.lt/camera/api/camera/Camera_048.jpg", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg", source)
 

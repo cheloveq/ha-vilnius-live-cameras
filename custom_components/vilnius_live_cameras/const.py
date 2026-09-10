@@ -15,13 +15,6 @@ CAMERAS = (
         "baltic_id": 5036,
     },
     {
-        "key": "tv_tower",
-        "name": "Vilniaus TV bokštas",
-        "page_url": "https://lietuvoskameros.lt/vilniaus-tv-bokstas/",
-        "still_image_url": "https://map.sviesoforai.lt/camera/api/camera/Camera_048.jpg",
-        "stream_source": None,
-    },
-    {
         "key": "white_bridge",
         "name": "Baltasis tiltas",
         "page_url": "https://lietuvoskameros.lt/baltasis-tiltas-tiesiogiai",

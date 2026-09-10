@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Vilnius Live Cameras",
-        "description": "Add the five Vilnius live cameras from LietuvosKameros.lt."
+        "description": "Add the four Vilnius live cameras from LietuvosKameros.lt."
       }
     },
     "abort": {
@@ -11,4 +11,3 @@
     }
   }
 }
-
