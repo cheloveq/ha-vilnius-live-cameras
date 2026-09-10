@@ -18,7 +18,7 @@ class CameraCatalogTestCase(unittest.TestCase):
         manifest = json.loads((COMPONENT / "manifest.json").read_text())
         self.assertEqual(manifest["domain"], "vilnius_live_cameras")
         self.assertTrue(manifest["config_flow"])
-        self.assertEqual(manifest["version"], "0.1.1")
+        self.assertEqual(manifest["version"], "0.1.2")
 
     def test_catalog_contains_the_five_requested_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()

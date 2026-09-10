@@ -1,0 +1,14 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vilnius Live Cameras",
+        "description": "Add the five Vilnius live cameras from LietuvosKameros.lt."
+      }
+    },
+    "abort": {
+      "already_configured": "Vilnius Live Cameras is already configured."
+    }
+  }
+}
+
