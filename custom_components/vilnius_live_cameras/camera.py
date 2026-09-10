@@ -1,0 +1,50 @@
+"""Camera platform for Vilnius Live Cameras."""
+
+from __future__ import annotations
+
+from typing import Any
+
+from homeassistant.components.camera import Camera
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+from .const import CAMERAS, DOMAIN
+
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Create all configured Vilnius camera entities."""
+    async_add_entities(VilniusLiveCamera(camera) for camera in CAMERAS)
+
+
+class VilniusLiveCamera(Camera):
+    """A camera backed by an upstream HLS stream or JPEG snapshot."""
+
+    _attr_has_entity_name = True
+
+    def __init__(self, camera: dict[str, Any]) -> None:
+        super().__init__()
+        self._camera = camera
+        self._attr_unique_id = f"{DOMAIN}_{camera['key']}"
+        self._attr_name = camera["name"]
+        self._attr_content_type = "image/jpeg"
+
+    @property
+    def still_image_url(self) -> str | None:
+        """Return the upstream JPEG snapshot, when one exists."""
+        return self._camera["still_image_url"]
+
+    @property
+    def stream_source(self) -> str | None:
+        """Return the upstream HLS stream, when one exists."""
+        return self._camera["stream_source"]
+
+    @property
+    def extra_state_attributes(self) -> dict[str, str]:
+        """Expose the canonical source page for attribution and recovery."""
+        return {"source_page": self._camera["page_url"]}
+
