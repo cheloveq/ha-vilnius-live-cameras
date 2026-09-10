@@ -13,6 +13,11 @@ from .const import CAMERAS, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 AUTH_URL = "https://balticlivecam.com/wp-admin/admin-ajax.php"
+REQUEST_HEADERS = {
+    "Origin": "https://balticlivecam.com",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/152 Safari/537.36",
+    "X-Requested-With": "XMLHttpRequest",
+}
 STREAM_PATTERN = re.compile(r"https://edge[^']+/index\.m3u8\?token=[^']+")
 
 
@@ -43,7 +48,7 @@ class VilniusLiveCamerasCoordinator(DataUpdateCoordinator[dict[str, str]]):
                         "embed": 0,
                         "main_referer": camera["page_url"],
                     },
-                    headers={"Referer": camera["page_url"]},
+                    headers={**REQUEST_HEADERS, "Referer": camera["page_url"]},
                 ) as response:
                     if response.status != 200:
                         _LOGGER.warning("Baltic Live Cam auth returned HTTP %s for %s", response.status, camera["key"])
@@ -56,4 +61,3 @@ class VilniusLiveCamerasCoordinator(DataUpdateCoordinator[dict[str, str]]):
             except Exception as err:  # Keep other cameras usable if one source fails.
                 _LOGGER.warning("Unable to refresh Baltic Live Cam stream for %s: %s", camera["key"], err)
         return streams
-

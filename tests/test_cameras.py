@@ -46,6 +46,8 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("auth_token", source)
         self.assertIn("timedelta(minutes=5)", source)
         self.assertIn("STREAM_PATTERN", source)
+        self.assertIn("X-Requested-With", source)
+        self.assertIn("User-Agent", source)
 
     def test_camera_implements_ha_2026_camera_hooks(self) -> None:
         source = (COMPONENT / "camera.py").read_text()
