@@ -18,7 +18,7 @@ class CameraCatalogTestCase(unittest.TestCase):
         manifest = json.loads((COMPONENT / "manifest.json").read_text())
         self.assertEqual(manifest["domain"], "vilnius_live_cameras")
         self.assertTrue(manifest["config_flow"])
-        self.assertEqual(manifest["version"], "0.1.3")
+        self.assertEqual(manifest["version"], "0.1.4")
 
     def test_catalog_contains_the_four_live_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()
@@ -38,6 +38,8 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam2.m3u8", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg", source)
+        self.assertIn("vlcsnap-2025-06-07-15h25m49s037.png", source)
+        self.assertIn("vlcsnap-2025-06-07-15h22m30s201.png", source)
 
     def test_baltic_auth_refresh_is_not_hard_coded(self) -> None:
         source = (COMPONENT / "coordinator.py").read_text()

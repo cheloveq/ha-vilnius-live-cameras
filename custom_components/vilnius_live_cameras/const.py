@@ -18,14 +18,14 @@ CAMERAS = (
         "key": "white_bridge",
         "name": "Baltasis tiltas",
         "page_url": "https://lietuvoskameros.lt/baltasis-tiltas-tiesiogiai",
-        "still_image_url": None,
+        "still_image_url": "https://lietuvoskameros.lt/wp-content/uploads/2025/06/vlcsnap-2025-06-07-15h25m49s037.png",
         "stream_source": "https://tiesiogiai.kameros.com/stream/cam1.m3u8",
     },
     {
         "key": "vilnius_panorama",
         "name": "Vilniaus miesto panorama",
         "page_url": "https://lietuvoskameros.lt/vilnius-tiesiogiai/",
-        "still_image_url": None,
+        "still_image_url": "https://lietuvoskameros.lt/wp-content/uploads/2025/06/vlcsnap-2025-06-07-15h22m30s201.png",
         "stream_source": "https://tiesiogiai.kameros.com/stream/cam2.m3u8",
     },
     {
