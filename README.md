@@ -4,7 +4,13 @@
 
 # Vilnius Live Cameras
 
+[![Validate](https://github.com/cheloveq/ha-vilnius-live-cameras/actions/workflows/validate.yml/badge.svg)](https://github.com/cheloveq/ha-vilnius-live-cameras/actions/workflows/validate.yml)
+[![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://www.hacs.xyz/)
+[![Latest release](https://img.shields.io/github/v/release/cheloveq/ha-vilnius-live-cameras)](https://github.com/cheloveq/ha-vilnius-live-cameras/releases)
+
 Home Assistant custom integration exposing four Vilnius live cameras from [LietuvosKameros.lt](https://lietuvoskameros.lt/).
+
+> Unofficial community integration. It is not affiliated with or endorsed by the camera provider.
 
 ## Included cameras
 
@@ -27,3 +33,7 @@ The integration refreshes Baltic Live Cam authorization tokens every five minute
 4. Install **Vilnius Live Cameras**, restart Home Assistant, and add it from Settings → Devices & services.
 
 The repository is public so HACS can access it directly. The integration creates four camera entities.
+
+## Support
+
+Please include the Home Assistant version, integration version, relevant logs, and the affected camera when [opening an issue](https://github.com/cheloveq/ha-vilnius-live-cameras/issues).
