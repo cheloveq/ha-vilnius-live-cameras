@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="custom_components/vilnius_live_cameras/brand/icon.png" alt="Vilnius Live Cameras" width="180">
+</p>
+
 # Vilnius Live Cameras
 
 Home Assistant custom integration exposing four Vilnius live cameras from [LietuvosKameros.lt](https://lietuvoskameros.lt/).
