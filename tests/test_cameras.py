@@ -40,7 +40,13 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg", source)
 
+    def test_baltic_auth_refresh_is_not_hard_coded(self) -> None:
+        source = (COMPONENT / "coordinator.py").read_text()
+        self.assertIn("action", source)
+        self.assertIn("auth_token", source)
+        self.assertIn("timedelta(minutes=5)", source)
+        self.assertIn("STREAM_PATTERN", source)
+
 
 if __name__ == "__main__":
     unittest.main()
-

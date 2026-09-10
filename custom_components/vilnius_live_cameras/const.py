@@ -12,6 +12,7 @@ CAMERAS = (
         "page_url": "https://lietuvoskameros.lt/lietuvos-nacionaline-filharmonija/",
         "still_image_url": "https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg",
         "stream_source": None,
+        "baltic_id": 5036,
     },
     {
         "key": "tv_tower",
@@ -40,6 +41,6 @@ CAMERAS = (
         "page_url": "https://lietuvoskameros.lt/sv-jono-gatve-vilnius",
         "still_image_url": "https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg",
         "stream_source": None,
+        "baltic_id": 95327,
     },
 )
-
