@@ -47,6 +47,12 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("timedelta(minutes=5)", source)
         self.assertIn("STREAM_PATTERN", source)
 
+    def test_camera_implements_ha_2026_camera_hooks(self) -> None:
+        source = (COMPONENT / "camera.py").read_text()
+        self.assertIn("async def async_camera_image", source)
+        self.assertIn("async def stream_source", source)
+        self.assertIn("CameraEntityFeature.STREAM", source)
+
 
 if __name__ == "__main__":
     unittest.main()
