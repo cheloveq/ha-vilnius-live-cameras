@@ -18,7 +18,7 @@ class CameraCatalogTestCase(unittest.TestCase):
         manifest = json.loads((COMPONENT / "manifest.json").read_text())
         self.assertEqual(manifest["domain"], "vilnius_live_cameras")
         self.assertTrue(manifest["config_flow"])
-        self.assertEqual(manifest["version"], "0.1.5")
+        self.assertEqual(manifest["version"], "0.1.6")
 
     def test_catalog_contains_the_four_live_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()
@@ -38,7 +38,8 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam2.m3u8", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg", source)
         self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg", source)
-        self.assertIn("vlcsnap-2025-06-07-15h25m49s037.png", source)
+        self.assertIn('"key": "white_bridge"', source)
+        self.assertIn('"generate_snapshot": True', source)
         self.assertIn("vlcsnap-2025-06-07-15h22m30s201.png", source)
 
     def test_baltic_auth_refresh_is_not_hard_coded(self) -> None:
@@ -57,6 +58,8 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("async def async_camera_image", source)
         self.assertIn("async def stream_source", source)
         self.assertIn("CameraEntityFeature.STREAM", source)
+        self.assertIn("GENERATED_SNAPSHOT_MAX_AGE = timedelta(minutes=30)", source)
+        self.assertIn("await async_get_image(self.hass, source)", source)
 
 
 if __name__ == "__main__":

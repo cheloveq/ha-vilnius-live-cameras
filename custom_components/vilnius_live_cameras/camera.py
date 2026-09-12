@@ -2,19 +2,23 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 import logging
 from typing import Any
 
 from homeassistant.components.camera import Camera, CameraEntityFeature
+from homeassistant.components.ffmpeg import async_get_image
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.util import dt as dt_util
 
 from .const import CAMERAS, DOMAIN
 from .coordinator import VilniusLiveCamerasCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+GENERATED_SNAPSHOT_MAX_AGE = timedelta(minutes=30)
 
 
 async def async_setup_entry(
@@ -39,15 +43,39 @@ class VilniusLiveCamera(Camera):
         self._attr_unique_id = f"{DOMAIN}_{camera['key']}"
         self._attr_name = camera["name"]
         self._attr_content_type = "image/jpeg"
+        self._generated_snapshot: bytes | None = None
+        self._generated_snapshot_at: datetime | None = None
         if camera["stream_source"] is not None or camera.get("baltic_id") is not None:
             self._attr_supported_features = CameraEntityFeature.STREAM
 
     async def async_camera_image(
         self, width: int | None = None, height: int | None = None
     ) -> bytes | None:
-        """Fetch a still image for cameras that expose a snapshot URL."""
+        """Fetch an upstream still or generate a recent frame from live HLS."""
         if self.still_image_url is None:
-            return None
+            if not self._camera.get("generate_snapshot"):
+                return None
+            now = dt_util.utcnow()
+            if (
+                self._generated_snapshot is not None
+                and self._generated_snapshot_at is not None
+                and now - self._generated_snapshot_at < GENERATED_SNAPSHOT_MAX_AGE
+            ):
+                return self._generated_snapshot
+            source = await self.stream_source()
+            if source is None:
+                return self._generated_snapshot
+            try:
+                image = await async_get_image(self.hass, source)
+                if image:
+                    self._generated_snapshot = image
+                    self._generated_snapshot_at = now
+                return self._generated_snapshot
+            except Exception as err:
+                _LOGGER.warning(
+                    "Unable to generate snapshot for %s: %s", self._camera["key"], err
+                )
+                return self._generated_snapshot
         session = async_get_clientsession(self.hass)
         try:
             async with session.get(self.still_image_url) as response:

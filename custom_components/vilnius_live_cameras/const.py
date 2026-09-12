@@ -18,8 +18,9 @@ CAMERAS = (
         "key": "white_bridge",
         "name": "Baltasis tiltas",
         "page_url": "https://lietuvoskameros.lt/baltasis-tiltas-tiesiogiai",
-        "still_image_url": "https://lietuvoskameros.lt/wp-content/uploads/2025/06/vlcsnap-2025-06-07-15h25m49s037.png",
+        "still_image_url": None,
         "stream_source": "https://tiesiogiai.kameros.com/stream/cam1.m3u8",
+        "generate_snapshot": True,
     },
     {
         "key": "vilnius_panorama",
