@@ -18,7 +18,7 @@ class CameraCatalogTestCase(unittest.TestCase):
         manifest = json.loads((COMPONENT / "manifest.json").read_text())
         self.assertEqual(manifest["domain"], "vilnius_live_cameras")
         self.assertTrue(manifest["config_flow"])
-        self.assertEqual(manifest["version"], "0.1.6")
+        self.assertEqual(manifest["version"], "0.1.7")
 
     def test_catalog_contains_the_four_live_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()
@@ -32,15 +32,14 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertEqual(source.count('"key": '), 4)
         self.assertNotIn("tv_tower", source)
 
-    def test_stream_and_snapshot_urls_are_https(self) -> None:
+    def test_all_thumbnails_are_generated_from_live_streams(self) -> None:
         source = (COMPONENT / "const.py").read_text()
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam1.m3u8", source)
         self.assertIn("https://tiesiogiai.kameros.com/stream/cam2.m3u8", source)
-        self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusRamda.jpg", source)
-        self.assertIn("https://thumbs.balticlivecam.com/blc/VilniusNarutis2.jpg", source)
-        self.assertIn('"key": "white_bridge"', source)
-        self.assertIn('"generate_snapshot": True', source)
-        self.assertIn("vlcsnap-2025-06-07-15h22m30s201.png", source)
+        self.assertEqual(source.count('"still_image_url": None'), 4)
+        self.assertEqual(source.count('"generate_snapshot": True'), 4)
+        self.assertNotIn("thumbs.balticlivecam.com", source)
+        self.assertNotIn("vlcsnap-2025-06-07", source)
 
     def test_baltic_auth_refresh_is_not_hard_coded(self) -> None:
         source = (COMPONENT / "coordinator.py").read_text()
