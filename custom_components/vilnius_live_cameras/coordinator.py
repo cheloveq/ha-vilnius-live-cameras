@@ -7,7 +7,7 @@ import logging
 import re
 
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import CAMERAS, DOMAIN
 
@@ -34,7 +34,9 @@ class VilniusLiveCamerasCoordinator(DataUpdateCoordinator[dict[str, str]]):
 
     async def _async_update_data(self) -> dict[str, str]:
         session = async_get_clientsession(self.hass)
-        streams: dict[str, str] = {}
+        # Preserve a previously working token when one refresh encounters a
+        # transient upstream failure.
+        streams: dict[str, str] = dict(self.data or {})
         for camera in CAMERAS:
             camera_id = camera.get("baltic_id")
             if camera_id is None:
@@ -60,4 +62,8 @@ class VilniusLiveCamerasCoordinator(DataUpdateCoordinator[dict[str, str]]):
                         _LOGGER.warning("Baltic Live Cam auth response had no stream for %s", camera["key"])
             except Exception as err:  # Keep other cameras usable if one source fails.
                 _LOGGER.warning("Unable to refresh Baltic Live Cam stream for %s: %s", camera["key"], err)
+        if not streams:
+            # Make initial setup retryable instead of loading cameras whose
+            # tokenized streams remain absent until a manual reload.
+            raise UpdateFailed("Unable to obtain any Baltic Live Cam stream URLs")
         return streams

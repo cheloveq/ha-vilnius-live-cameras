@@ -18,7 +18,7 @@ class CameraCatalogTestCase(unittest.TestCase):
         manifest = json.loads((COMPONENT / "manifest.json").read_text())
         self.assertEqual(manifest["domain"], "vilnius_live_cameras")
         self.assertTrue(manifest["config_flow"])
-        self.assertEqual(manifest["version"], "0.1.4")
+        self.assertEqual(manifest["version"], "0.1.5")
 
     def test_catalog_contains_the_four_live_cameras(self) -> None:
         source = (COMPONENT / "const.py").read_text()
@@ -49,6 +49,8 @@ class CameraCatalogTestCase(unittest.TestCase):
         self.assertIn("STREAM_PATTERN", source)
         self.assertIn("X-Requested-With", source)
         self.assertIn("User-Agent", source)
+        self.assertIn("dict(self.data or {})", source)
+        self.assertIn("raise UpdateFailed", source)
 
     def test_camera_implements_ha_2026_camera_hooks(self) -> None:
         source = (COMPONENT / "camera.py").read_text()
